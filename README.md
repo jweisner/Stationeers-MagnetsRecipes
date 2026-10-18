@@ -11,8 +11,45 @@ methane atmosphere, which is where the balance comes from.
 
 ## Requirements
 
-- Stationeers with [BepInEx](https://github.com/BepInEx/BepInEx) and
-  [StationeersLaunchPad](https://github.com/StationeersLaunchPad/StationeersLaunchPad).
+- [BepInEx 5](https://github.com/BepInEx/BepInEx) (Windows x64 build, also when playing on
+  Linux through Proton).
+- [StationeersLaunchPad](https://github.com/StationeersLaunchPad/StationeersLaunchPad), which
+  loads the mod.
+
+## Installing
+
+1. **Install BepInEx and StationeersLaunchPad** if you have not already, following the
+   [StationeersLaunchPad installation guide](https://github.com/StationeersLaunchPad/StationeersLaunchPad#installation).
+   You should see the LaunchPad window at the bottom of the game's loading screen.
+2. **Download** `FurnaceRecipes-<version>.zip` from the
+   [Releases page](https://github.com/jweisner/stationeers-mod-recipes/releases).
+3. **Extract it into your Stationeers mods folder**, so that you end up with a
+   `FurnaceRecipes` folder inside it:
+
+   | Platform | Mods folder |
+   |---|---|
+   | Windows | `Documents\My Games\Stationeers\mods` |
+   | Linux (Proton) | `~/.local/share/Steam/steamapps/compatdata/544550/pfx/drive_c/users/steamuser/Documents/My Games/Stationeers/mods` |
+
+   Create the `mods` folder if it does not exist. The result should look like:
+
+   ```
+   mods/
+     FurnaceRecipes/
+       About/About.xml
+       GameData/advancedfurnace.xml
+       FurnaceRecipes.dll
+   ```
+
+4. **Start the game.** LaunchPad loads local mods automatically. To check it is enabled, click
+   the LaunchPad window on the loading screen and look for **Furnace Recipes** in the mod list.
+
+To update, delete the old `FurnaceRecipes` folder and extract the new zip in its place. To
+uninstall, delete the folder.
+
+**Multiplayer**: every player and the server need the mod. For a dedicated server, see
+LaunchPad's dedicated server instructions (its `Export Mod Package` button bundles your enabled
+mods for the server).
 
 ## Features
 
@@ -68,7 +105,7 @@ These affect carburizing only. The charcoal recipe's conditions are in
 - A charcoal batch with too little methane still completes at full output; the methane just
   drains to zero and a warning is logged. This may change to stalling the batch.
 
-## Building and installing
+## Building from source
 
 Needs the .NET SDK. The project references the game's assemblies from
 `~/.local/share/Steam/steamapps/common/Stationeers`; override by setting `StationeersPath` in
@@ -82,7 +119,21 @@ This builds `src/FurnaceRecipes.csproj` and installs `About/`, `GameData/` and
 `FurnaceRecipes.dll` into `mods/FurnaceRecipes` in the game's Proton prefix (override the mods
 directory with `STATIONEERS_MODS`). Enable **Furnace Recipes** in LaunchPad's mod list.
 
-Log output goes to `BepInEx/LogOutput.log` under the `Furnace Recipes` source.
+Log output goes to `BepInEx/LogOutput.log` (in the game folder) under the `Furnace Recipes`
+source.
+
+### Making a release
+
+Bump `<Version>` in `About/About.xml` and `PluginVersion` in `src/Plugin.cs` (the script checks
+they match), commit and push, then:
+
+```bash
+./release.sh            # build dist/FurnaceRecipes-<version>.zip only
+./release.sh --publish  # also create GitHub release v<version> with the zip attached
+```
+
+`--publish` refuses to run with uncommitted changes, unpushed commits, or an existing release
+for that version, and checks the uploaded zip actually downloads.
 
 ## Layout
 
@@ -93,3 +144,5 @@ Log output goes to `BepInEx/LogOutput.log` under the `Furnace Recipes` source.
 | `src/HydrogenPatch.cs` | Adds H2 for the methane used by charcoal smelts |
 | `src/CarburizingPatch.cs` | Deposits carbon into iron in a methane furnace |
 | `src/Plugin.cs` | BepInEx entry point and config |
+| `deploy.sh` | Build and install into the local mods folder |
+| `release.sh` | Build the release zip, optionally publish a GitHub release |
