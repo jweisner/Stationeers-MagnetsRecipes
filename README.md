@@ -1,0 +1,95 @@
+# Furnace Recipes
+
+A Stationeers mod that puts methane to work in the **Advanced Furnace**. Methane is cracked into
+carbon and hydrogen (CH4 -> C + 2 H2) in two ways:
+
+- **Charcoal pyrolysis**: a charcoal bed in hot methane grows into more charcoal.
+- **Carburizing**: carbon is deposited into molten iron until the mix is ready for vanilla steel.
+
+Both release hydrogen into the furnace. The hard part is keeping the furnace above 1100 K with a
+methane atmosphere, which is where the balance comes from.
+
+## Requirements
+
+- Stationeers with [BepInEx](https://github.com/BepInEx/BepInEx) and
+  [StationeersLaunchPad](https://github.com/StationeersLaunchPad/StationeersLaunchPad).
+
+## Features
+
+### Charcoal pyrolysis
+
+A new Advanced Furnace recipe:
+
+| Input | Conditions | Output |
+|---|---|---|
+| 1 Carbon (charcoal) + 50 mol methane per charcoal out | >= 1100 K, >= 100 kPa | 2 charcoal + 2 mol H2 per mol methane used |
+
+Each charcoal smelted gives two back, so a net charcoal costs 100 mol of methane and yields
+200 mol of hydrogen. The recipe needs a charcoal seed (make the first from Biomass); coal is not
+used because coal plus methane is vanilla Solid Fuel.
+
+Furnace-made charcoal off-gases CO2 and Pollutant each time it is smelted. That does not block
+the recipe.
+
+### Carburizing iron to steel
+
+There is no new steel recipe. Instead, while the Advanced Furnace holds iron with its mold
+closed, the plugin adds carbon to the reagent mix one unit at a time:
+
+- Every 5 seconds: +1 Carbon, -100 mol methane, +200 mol hydrogen.
+- Requires: at least 1 iron, nothing but iron and carbon in the mix, >= 1100 K, >= 100 mol
+  methane, and a clean methane atmosphere (no CO2, N2, etc.).
+- Stops when Carbon equals Iron.
+
+Vanilla steel is Iron 3 : Carbon 1. Watch the furnace (or read its reagents from IC10) and open
+the mold when the ratio is right, at vanilla steel's conditions (>= 900 K, >= 1000 kPa). For
+example, 3 iron ingots at `Fe 3 C 1` give 4 steel ingots. Miss the window and you get slag,
+which a centrifuge turns back into iron ore and charcoal; or add more iron to bring the ratio
+back to 3:1.
+
+Feed iron **ingots**: ore off-gases CO2 and Pollutant, which stops carburizing until it is
+purged.
+
+## Configuration
+
+`BepInEx/config/ca.weisner.stationeers.furnacerecipes.cfg`, section `[Carburizing]`:
+
+| Setting | Default | Meaning |
+|---|---|---|
+| `MinTemperatureK` | 1100 | Minimum furnace temperature for carburizing |
+| `MethanePerCarbon` | 100 | Mol of methane used per Carbon deposited (H2 released is twice this) |
+| `SecondsPerCarbon` | 5 | Seconds between deposits, per furnace |
+
+These affect carburizing only. The charcoal recipe's conditions are in
+`GameData/advancedfurnace.xml`.
+
+## Known issues
+
+- A charcoal batch with too little methane still completes at full output; the methane just
+  drains to zero and a warning is logged. This may change to stalling the batch.
+
+## Building and installing
+
+Needs the .NET SDK. The project references the game's assemblies from
+`~/.local/share/Steam/steamapps/common/Stationeers`; override by setting `StationeersPath` in
+the environment.
+
+```bash
+./deploy.sh
+```
+
+This builds `src/FurnaceRecipes.csproj` and installs `About/`, `GameData/` and
+`FurnaceRecipes.dll` into `mods/FurnaceRecipes` in the game's Proton prefix (override the mods
+directory with `STATIONEERS_MODS`). Enable **Furnace Recipes** in LaunchPad's mod list.
+
+Log output goes to `BepInEx/LogOutput.log` under the `Furnace Recipes` source.
+
+## Layout
+
+| Path | Contents |
+|---|---|
+| `About/About.xml` | Mod metadata |
+| `GameData/advancedfurnace.xml` | The charcoal recipe |
+| `src/HydrogenPatch.cs` | Adds H2 for the methane used by charcoal smelts |
+| `src/CarburizingPatch.cs` | Deposits carbon into iron in a methane furnace |
+| `src/Plugin.cs` | BepInEx entry point and config |

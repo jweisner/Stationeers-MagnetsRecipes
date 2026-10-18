@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Build and install into the Stationeers local mods folder (Proton prefix).
+set -euo pipefail
+cd "$(dirname "$0")"
+MODS="${STATIONEERS_MODS:-$HOME/.local/share/Steam/steamapps/compatdata/544550/pfx/drive_c/users/steamuser/Documents/My Games/Stationeers/mods}"
+DEST="$MODS/FurnaceRecipes"
+dotnet build -c Release src/FurnaceRecipes.csproj
+mkdir -p "$DEST/About" "$DEST/GameData"
+cp About/About.xml "$DEST/About/"
+cp GameData/*.xml "$DEST/GameData/"
+cp src/bin/Release/net472/FurnaceRecipes.dll "$DEST/"
+echo "Installed to $DEST"

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>FurnaceRecipes</AssemblyName>
+    <RootNamespace>FurnaceRecipes</RootNamespace>
+    <LangVersion>9.0</LangVersion>
+    <StationeersPath Condition="'$(StationeersPath)' == ''">$(HOME)/.local/share/Steam/steamapps/common/Stationeers</StationeersPath>
+    <Managed>$(StationeersPath)/rocketstation_Data/Managed</Managed>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp"><HintPath>$(Managed)/Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(Managed)/UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(Managed)/UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="BepInEx"><HintPath>$(StationeersPath)/BepInEx/core/BepInEx.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="0Harmony"><HintPath>$(StationeersPath)/BepInEx/core/0Harmony.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+</Project>
