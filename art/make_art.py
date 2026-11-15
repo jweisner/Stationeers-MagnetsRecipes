@@ -18,6 +18,7 @@ RED = "#E31837"
 ACCENT = "#FF4A5E"  # label red, lifted for contrast on the dark background
 INK = "#15191C"
 HAZARD_YELLOW = "#F2C500"
+HAZARD_WHITE = "#F2F4F2"
 BODY = ("#8FB0B6", "#DCEFF2", "#F4FCFD")  # dark edge, base, highlight
 PANEL_RED = ("#7A1618", "#B8282A")
 PANEL_GREY = "#56636A"
@@ -35,7 +36,7 @@ def defs():
         f'<linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">'
         f'<stop offset="0" stop-color="#C83234"/><stop offset="1" stop-color="{PANEL_RED[1]}"/></linearGradient>'
         f'<pattern id="hazard" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)">'
-        f'<rect width="10" height="10" fill="{HAZARD_YELLOW}"/><rect width="5" height="10" fill="{INK}"/></pattern>'
+        f'<rect width="10" height="10" fill="{HAZARD_WHITE}"/><rect width="5" height="10" fill="{INK}"/></pattern>'
         '<radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">'
         '<stop offset="0" stop-color="#FF5A3C" stop-opacity="0.35"/>'
         '<stop offset="1" stop-color="#FF5A3C" stop-opacity="0"/></radialGradient>'
@@ -85,40 +86,50 @@ def valve_wheel(cx, cy, r=15):
     spokes = "".join(
         f'<line x1="{cx}" y1="{cy}" x2="{cx + r * 0.8 * math.cos(math.radians(a)):.1f}" '
         f'y2="{cy + r * 0.8 * math.sin(math.radians(a)):.1f}" stroke="#4A555B" stroke-width="2.5"/>'
-        for a in (30, 150, 270))
+        for a in (45, 135, 225, 315))
     return (f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="#8E9AA0" stroke="#4A555B" stroke-width="2"/>'
             f'<circle cx="{cx}" cy="{cy}" r="{r * 0.78:.1f}" fill="none" stroke="#B4C0C5" stroke-width="1.5"/>'
             + spokes + f'<circle cx="{cx}" cy="{cy}" r="{r * 0.25:.1f}" fill="#B4C0C5" stroke="#4A555B"/>')
 
 
-def arrow_left(x, cy):
-    """Yellow import arrow with its bar, pointing left; x is the arrow tip."""
+def arrow_left(x, cy, bar_at_tip=False):
+    """Yellow arrow pointing left with a bar behind its tail (leaving) or in front of its tip (arriving).
+
+    x is the left edge of the whole glyph.
+    """
     y = HAZARD_YELLOW
-    return (f'<polygon points="{x},{cy} {x + 14},{cy - 12} {x + 14},{cy - 5} {x + 30},{cy - 5} {x + 30},{cy + 5} '
-            f'{x + 14},{cy + 5} {x + 14},{cy + 12}" fill="{y}"/>'
-            f'<rect x="{x + 34}" y="{cy - 12}" width="4" height="24" fill="{y}"/>')
+    tip = x + 8 if bar_at_tip else x
+    bar = x if bar_at_tip else x + 34
+    return (f'<polygon points="{tip},{cy} {tip + 14},{cy - 12} {tip + 14},{cy - 5} {tip + 30},{cy - 5} {tip + 30},{cy + 5} '
+            f'{tip + 14},{cy + 5} {tip + 14},{cy + 12}" fill="{y}"/>'
+            f'<rect x="{bar}" y="{cy - 12}" width="4" height="24" fill="{y}"/>')
 
 
 def furnace(ox, oy, scale):
     """Advanced Furnace front, drawn 320 x 380 in its own coordinates, top-left at (ox, oy)."""
-    body = (f'<path d="M14,380 L14,150 L46,66 Q62,26 112,20 L208,20 Q258,26 274,66 L306,150 L306,380 Z" '
-            f'fill="url(#body)" stroke="#5F7C82" stroke-width="3" stroke-linejoin="round"/>'
-            f'<path d="M30,380 L30,156 L60,76 Q74,42 116,36 L204,36 Q246,42 260,76 L290,156 L290,380" '
-            f'fill="none" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="2"/>')
+    # Round chamber seen end-on, with the console box standing in front of it.
+    body = ('<circle cx="160" cy="200" r="158" fill="url(#body)" stroke="#5F7C82" stroke-width="3"/>'
+            '<circle cx="160" cy="200" r="140" fill="none" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="2"/>'
+            '<circle cx="160" cy="200" r="132" fill="none" stroke="#8FB0B6" stroke-width="3"/>'
+            '<rect x="62" y="134" width="210" height="250" rx="6" fill="#000" opacity="0.25"/>'
+            '<rect x="56" y="128" width="210" height="252" rx="6" fill="url(#body)" stroke="#5F7C82" stroke-width="3"/>')
     feet = "".join(
         f'<rect x="{x}" y="356" width="44" height="40" rx="3" fill="#E9F5F6" stroke="#5F7C82" stroke-width="2"/>'
         for x in (26, 250))
     top = knob(92, 104) + knob(228, 104) + gauge(160, 96)
     vents = "".join(f'<rect x="{84 + i * 9}" y="168" width="5" height="34" rx="1" fill="#4A0E10"/>' for i in range(6))
     switch = ('<rect x="140" y="172" width="48" height="26" rx="2" fill="#2A1012"/>'
-              '<rect x="144" y="176" width="20" height="18" fill="#E23A3C"/><rect x="164" y="176" width="20" height="18" fill="#E78A8A"/>')
+              '<rect x="144" y="176" width="40" height="18" rx="1" fill="#3FD45A"/>'
+              '<rect x="144" y="176" width="40" height="6" rx="1" fill="#8AF09A"/>')
     button = ('<rect x="198" y="160" width="46" height="46" fill="url(#hazard)" stroke="#2A1012" stroke-width="2"/>'
-              '<rect x="207" y="169" width="28" height="28" rx="2" fill="#E05555" stroke="#7A1618" stroke-width="2"/>')
+              f'<rect x="207" y="169" width="28" height="28" rx="2" fill="#D02A2A" stroke="{HAZARD_YELLOW}" stroke-width="2.5"/>')
+    # Slot at the top holding a striped crossbar; the arm runs down the left side of the column.
     lever = ('<rect x="86" y="220" width="46" height="128" fill="#3F4A50"/>'
-             '<rect x="104" y="240" width="9" height="100" fill="#22292D"/>'
-             '<rect x="92" y="228" width="34" height="18" fill="url(#hazard)" stroke="#22292D" stroke-width="1.5"/>'
-             '<rect x="104" y="246" width="9" height="56" fill="#9AA6AC"/>')
-    controls = (arrow_left(144, 246) + valve_wheel(214, 246) + arrow_left(144, 286) + valve_wheel(214, 286))
+             '<rect x="92" y="226" width="36" height="40" fill="#15191C"/>'
+             '<rect x="91" y="238" width="7" height="104" rx="1" fill="#9AB0B6" stroke="#5F7C82" stroke-width="1"/>'
+             '<rect x="91" y="238" width="34" height="12" rx="3" fill="url(#hazard)" stroke="#22292D" stroke-width="1"/>')
+    controls = (arrow_left(150, 246) + valve_wheel(214, 246) + arrow_left(150, 286, bar_at_tip=True)
+                + valve_wheel(214, 286))
     screen_lines = "".join(
         f'<rect x="{164 + c * 24}" y="{318 + r * 7}" width="{18 if (r + c) % 3 else 12}" height="2.5" fill="#C9F5CF"/>'
         for r in range(4) for c in range(3))
