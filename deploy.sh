@@ -8,5 +8,5 @@ dotnet build -c Release src/MagnetsRecipes.csproj
 mkdir -p "$DEST/About" "$DEST/GameData"
 cp About/About.xml About/thumb.png About/Preview.png "$DEST/About/"
 cp GameData/*.xml "$DEST/GameData/"
-cp src/bin/Release/net472/MagnetsRecipes.dll "$DEST/"
+cp src/bin/Release/net472/MagnetsRecipes.dll LICENSE "$DEST/"
 echo "Installed to $DEST"
