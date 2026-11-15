@@ -30,5 +30,5 @@ SETTINGS
 BepInEx/config/net.pbmagnet.stationeers.magnetsrecipes.cfg: minimum temperature, methane per Carbon, seconds per Carbon.
 
 Source, releases and details: https://github.com/jweisner/Stationeers-MagnetsRecipes</Description>
-  <ChangeLog>First Workshop release: charcoal pyrolysis and carburizing iron to steel with methane in the Advanced Furnace.</ChangeLog>
+  <ChangeLog>Updated preview art</ChangeLog>
 </ModMetadata>
