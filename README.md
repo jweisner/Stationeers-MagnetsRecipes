@@ -157,6 +157,7 @@ for that version, and checks the uploaded zip actually downloads.
 | Path | Contents |
 |---|---|
 | `About/About.xml` | Mod metadata |
+| `AGENTS.md` | Working notes for changing the mod: status, release steps, gotchas |
 | `About/thumb.png`, `About/Preview.png` | Workshop thumbnail and in-game preview |
 | `GameData/advancedfurnace.xml` | Turns a grown carbon bed into charcoal when the mold opens |
 | `src/MethanePatch.cs` | Cracks methane into carbon and hydrogen: pyrolysis and carburizing |
