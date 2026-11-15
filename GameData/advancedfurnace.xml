@@ -4,12 +4,9 @@
 
     <!--
     Methane pyrolysis, carbon-seeded: CH4 -> C + 2 H2.
-    Smelted charcoal acts as the carbon bed. Each charcoal in gives 2 out (net +1), and
-    RequiredMix is removed per OUTPUT, so 50 x 2 = 100 mol CH4 per net charcoal.
-    H2 is added by the plugin (HydrogenPatch), not by this file.
-    No Rule="Pure": furnace-made charcoal off-gases CO2 and Pollutant every time it is smelted.
-    No Energy (endothermic heat) cost: playtesting showed the furnace already loses plenty of heat
-    holding methane at 1100 K, so an extra cost is not needed.
+    The plugin (MethanePatch) grows a carbon-only bed while the mold is closed, consuming methane
+    and releasing hydrogen as it goes. This recipe only turns the grown bed back into charcoal,
+    1 Carbon -> 1 charcoal, when the mold is opened under the same conditions.
     -->
     <RecipeData>
       <PrefabName>ItemCharcoal</PrefabName>
@@ -23,11 +20,8 @@
           <Start>100</Start>
           <Stop>99999</Stop>
         </Pressure>
-        <RequiredMix>
-          <Volatiles>50</Volatiles>
-        </RequiredMix>
       </Recipe>
-      <Output>2</Output>
+      <Output>1</Output>
     </RecipeData>
 
   </AdvancedFurnaceRecipes>

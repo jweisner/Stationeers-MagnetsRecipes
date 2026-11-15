@@ -3,7 +3,7 @@
 A Stationeers mod that puts methane to work in the **Advanced Furnace**. Methane is cracked into
 carbon and hydrogen (CH4 -> C + 2 H2) in two ways:
 
-- **Charcoal pyrolysis**: a charcoal bed in hot methane grows into more charcoal.
+- **Charcoal pyrolysis**: a charcoal bed in hot methane keeps growing into more charcoal.
 - **Carburizing**: carbon is deposited into molten iron until the mix is ready for vanilla steel.
 
 Both release hydrogen into the furnace. The hard part is keeping the furnace above 1100 K with a
@@ -55,18 +55,22 @@ mods for the server).
 
 ### Charcoal pyrolysis
 
-A new Advanced Furnace recipe:
+Put charcoal in the Advanced Furnace and keep the mold closed. While the furnace holds only
+carbon, the plugin grows the charcoal bed one unit at a time:
 
-| Input | Conditions | Output |
-|---|---|---|
-| 1 Carbon (charcoal) + 50 mol methane per charcoal out | >= 1100 K, >= 100 kPa | 2 charcoal + 2 mol H2 per mol methane used |
+- Every 5 seconds: +1 Carbon, -100 mol methane, +200 mol hydrogen.
+- Requires: at least 1 carbon, nothing else in the mix, >= 1100 K, >= 100 mol methane, and a
+  clean methane atmosphere (no CO2, N2, etc.).
+- No limit: the bed keeps growing as long as methane is supplied.
 
-Each charcoal smelted gives two back, so a net charcoal costs 100 mol of methane and yields
-200 mol of hydrogen. The recipe needs a charcoal seed (make the first from Biomass); coal is not
-used because coal plus methane is vanilla Solid Fuel.
+Open the mold at >= 1100 K and >= 100 kPa to take the bed out as charcoal, one per Carbon. A big
+bed comes out as several stacks in a row. Opened colder than that, the mix comes out as slag.
 
-Furnace-made charcoal off-gases CO2 and Pollutant each time it is smelted. That does not block
-the recipe.
+The bed needs a charcoal seed (make the first from Biomass). Smelting charcoal off-gases CO2 and
+Pollutant, which stops growth until it is purged from the furnace.
+
+Do not add iron to a growing bed: the mix becomes iron plus carbon and switches to carburizing
+below.
 
 ### Carburizing iron to steel
 
@@ -89,21 +93,16 @@ purged.
 
 ## Configuration
 
-`BepInEx/config/ca.weisner.stationeers.furnacerecipes.cfg`, section `[Carburizing]`:
+`BepInEx/config/ca.weisner.stationeers.furnacerecipes.cfg`, section `[Methane]`:
 
 | Setting | Default | Meaning |
 |---|---|---|
-| `MinTemperatureK` | 1100 | Minimum furnace temperature for carburizing |
+| `MinTemperatureK` | 1100 | Minimum furnace temperature for pyrolysis and carburizing |
 | `MethanePerCarbon` | 100 | Mol of methane used per Carbon deposited (H2 released is twice this) |
 | `SecondsPerCarbon` | 5 | Seconds between deposits, per furnace |
 
-These affect carburizing only. The charcoal recipe's conditions are in
+The temperature and pressure for opening the mold on a charcoal bed are in
 `GameData/advancedfurnace.xml`.
-
-## Known issues
-
-- A charcoal batch with too little methane still completes at full output; the methane just
-  drains to zero and a warning is logged. This may change to stalling the batch.
 
 ## Building from source
 
@@ -140,9 +139,8 @@ for that version, and checks the uploaded zip actually downloads.
 | Path | Contents |
 |---|---|
 | `About/About.xml` | Mod metadata |
-| `GameData/advancedfurnace.xml` | The charcoal recipe |
-| `src/HydrogenPatch.cs` | Adds H2 for the methane used by charcoal smelts |
-| `src/CarburizingPatch.cs` | Deposits carbon into iron in a methane furnace |
+| `GameData/advancedfurnace.xml` | Turns a grown carbon bed into charcoal when the mold opens |
+| `src/MethanePatch.cs` | Cracks methane into carbon and hydrogen: pyrolysis and carburizing |
 | `src/Plugin.cs` | BepInEx entry point and config |
 | `deploy.sh` | Build and install into the local mods folder |
 | `release.sh` | Build the release zip, optionally publish a GitHub release |

@@ -20,11 +20,11 @@ namespace FurnaceRecipes
         private void Awake()
         {
             Log = Logger;
-            MinTemperatureK = Config.Bind("Carburizing", "MinTemperatureK", 1100.0,
-                "Minimum Advanced Furnace temperature for methane carburizing.");
-            MethanePerCarbon = Config.Bind("Carburizing", "MethanePerCarbon", 100.0,
+            MinTemperatureK = Config.Bind("Methane", "MinTemperatureK", 1100.0,
+                "Minimum Advanced Furnace temperature for methane carburizing and pyrolysis.");
+            MethanePerCarbon = Config.Bind("Methane", "MethanePerCarbon", 100.0,
                 "Mol of methane consumed per unit of Carbon deposited (releases twice that in H2).");
-            SecondsPerCarbon = Config.Bind("Carburizing", "SecondsPerCarbon", 5f,
+            SecondsPerCarbon = Config.Bind("Methane", "SecondsPerCarbon", 5f,
                 "Seconds between Carbon deposits per furnace.");
             new Harmony(PluginGuid).PatchAll(typeof(Plugin).Assembly);
             Log.LogInfo("Furnace Recipes loaded");
