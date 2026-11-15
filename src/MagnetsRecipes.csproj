@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
-    <AssemblyName>FurnaceRecipes</AssemblyName>
-    <RootNamespace>FurnaceRecipes</RootNamespace>
+    <AssemblyName>MagnetsRecipes</AssemblyName>
+    <RootNamespace>MagnetsRecipes</RootNamespace>
     <LangVersion>9.0</LangVersion>
     <StationeersPath Condition="'$(StationeersPath)' == ''">$(HOME)/.local/share/Steam/steamapps/common/Stationeers</StationeersPath>
     <Managed>$(StationeersPath)/rocketstation_Data/Managed</Managed>

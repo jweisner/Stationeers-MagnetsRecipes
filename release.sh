@@ -17,7 +17,7 @@ if [ -z "$VERSION" ] || [ "$VERSION" != "$PLUGIN_VERSION" ]; then
   exit 1
 fi
 TAG="v$VERSION"
-ZIP="FurnaceRecipes-$VERSION.zip"
+ZIP="MagnetsRecipes-$VERSION.zip"
 
 if [ "$PUBLISH" = 1 ]; then
   if [ -n "$(git status --porcelain)" ]; then
@@ -39,14 +39,14 @@ fi
 STAGE="$PWD/dist/stage"
 rm -rf "$STAGE" "dist/$ZIP"
 STATIONEERS_MODS="$STAGE" ./deploy.sh
-(cd "$STAGE" && zip -qr "../$ZIP" FurnaceRecipes)
+(cd "$STAGE" && zip -qr "../$ZIP" MagnetsRecipes)
 rm -rf "$STAGE"
 echo "Built dist/$ZIP"
 unzip -l "dist/$ZIP"
 
 if [ "$PUBLISH" = 1 ]; then
   gh release create "$TAG" "dist/$ZIP" --target "$(git rev-parse HEAD)" \
-    --title "Furnace Recipes $VERSION" --generate-notes
+    --title "Magnet's Recipes $VERSION" --generate-notes
   # A listed asset is not proof it downloads; fetch it.
   REPO=$(gh repo view --json nameWithOwner -q .nameWithOwner)
   URL="https://github.com/$REPO/releases/download/$TAG/$ZIP"

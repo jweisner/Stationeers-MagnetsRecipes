@@ -5,7 +5,7 @@ using Assets.Scripts.Objects.Pipes;
 using HarmonyLib;
 using Reagents;
 
-namespace FurnaceRecipes
+namespace MagnetsRecipes
 {
     // Methane cracking in the Advanced Furnace: CH4 -> C + 2 H2. While the mold is closed and the
     // furnace is hot with a pure methane atmosphere, deposit carbon into its reagent mix one whole

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetadata>
-  <Name>Furnace Recipes</Name>
-  <ModID>ca.weisner.stationeers.FurnaceRecipes</ModID>
+  <Name>Magnet's Recipes</Name>
+  <ModID>ca.weisner.stationeers.MagnetsRecipes</ModID>
   <Author>Jesse Weisner</Author>
   <Version>0.0.1</Version>
   <Description>Methane in the Advanced Furnace: charcoal-seeded pyrolysis (more charcoal + H2), and carburizing that deposits carbon into iron (+ H2) until the mix is ready for vanilla steel.</Description>

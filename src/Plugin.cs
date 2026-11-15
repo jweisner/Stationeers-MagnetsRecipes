@@ -3,13 +3,13 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
 
-namespace FurnaceRecipes
+namespace MagnetsRecipes
 {
     [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
     public class Plugin : BaseUnityPlugin
     {
-        public const string PluginGuid = "ca.weisner.stationeers.furnacerecipes";
-        public const string PluginName = "Furnace Recipes";
+        public const string PluginGuid = "ca.weisner.stationeers.magnetsrecipes";
+        public const string PluginName = "Magnet's Recipes";
         public const string PluginVersion = "0.0.1";
 
         internal static ManualLogSource Log = null!;
@@ -27,7 +27,7 @@ namespace FurnaceRecipes
             SecondsPerCarbon = Config.Bind("Methane", "SecondsPerCarbon", 5f,
                 "Seconds between Carbon deposits per furnace.");
             new Harmony(PluginGuid).PatchAll(typeof(Plugin).Assembly);
-            Log.LogInfo("Furnace Recipes loaded");
+            Log.LogInfo("Magnet's Recipes loaded");
         }
     }
 }
