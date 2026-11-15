@@ -8,7 +8,7 @@ namespace MagnetsRecipes
     [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
     public class Plugin : BaseUnityPlugin
     {
-        public const string PluginGuid = "ca.weisner.stationeers.magnetsrecipes";
+        public const string PluginGuid = "net.pbmagnet.stationeers.magnetsrecipes";
         public const string PluginName = "Magnet's Recipes";
         public const string PluginVersion = "0.0.1";
 

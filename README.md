@@ -93,7 +93,7 @@ purged.
 
 ## Configuration
 
-`BepInEx/config/ca.weisner.stationeers.magnetsrecipes.cfg`, section `[Methane]`:
+`BepInEx/config/net.pbmagnet.stationeers.magnetsrecipes.cfg`, section `[Methane]`:
 
 | Setting | Default | Meaning |
 |---|---|---|
