@@ -4,5 +4,30 @@
   <ModID>net.pbmagnet.stationeers.MagnetsRecipes</ModID>
   <Author>Pb_Magnet</Author>
   <Version>0.0.1</Version>
-  <Description>Methane in the Advanced Furnace: charcoal-seeded pyrolysis (more charcoal + H2), and carburizing that deposits carbon into iron (+ H2) until the mix is ready for vanilla steel.</Description>
+  <Description>Puts methane to work in the Advanced Furnace. Hot methane is cracked into carbon and hydrogen (CH4 -&gt; C + 2 H2), in two ways.
+
+CHARCOAL PYROLYSIS
+Put charcoal in the Advanced Furnace, fill it with methane and keep the mold closed. The charcoal bed grows by 1 Carbon every 5 seconds, using 100 mol methane and releasing 200 mol hydrogen each time. There is no limit: it keeps growing as long as you feed it methane.
+- Needs: only carbon in the furnace, at least 1100 K, at least 100 mol methane, and a clean methane atmosphere (no CO2, N2, O2, etc.).
+- Charcoal off-gases CO2 and Pollutant when it melts. Purge those before the bed starts growing.
+- Open the mold at 1100 K and 100 kPa or more to get the bed back as charcoal, one per Carbon. Opened colder, it comes out as slag.
+- You need a charcoal seed to start. Make the first from Biomass.
+
+CARBURIZING IRON TO STEEL
+Smelt iron ingots in a methane-filled Advanced Furnace with the mold closed. Carbon is added to the iron 1 unit every 5 seconds (same methane and hydrogen as above), and stops when Carbon equals Iron.
+- Vanilla steel is 3 Iron : 1 Carbon. Watch the furnace, or read its reagents from IC10, and open the mold at the right ratio under vanilla steel conditions (900 K, 1000 kPa). 3 iron ingots at Fe 3 C 1 give 4 steel.
+- Miss the window and you get slag (a centrifuge turns it back into iron ore and charcoal), or add more iron to bring the ratio back to 3:1.
+- Use ingots, not ore: ore's off-gas stops carburizing until it is purged.
+
+The hard part is holding the furnace above 1100 K in methane. Watch the hydrogen build-up.
+
+REQUIREMENTS
+- BepInEx 5 and StationeersLaunchPad.
+- Multiplayer: the server and every player need the mod.
+
+SETTINGS
+BepInEx/config/net.pbmagnet.stationeers.magnetsrecipes.cfg: minimum temperature, methane per Carbon, seconds per Carbon.
+
+Source, releases and details: https://github.com/jweisner/Stationeers-MagnetsRecipes</Description>
+  <ChangeLog>First Workshop release: charcoal pyrolysis and carburizing iron to steel with methane in the Advanced Furnace.</ChangeLog>
 </ModMetadata>
