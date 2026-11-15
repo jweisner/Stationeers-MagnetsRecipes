@@ -18,12 +18,22 @@ methane atmosphere, which is where the balance comes from.
 
 ## Installing
 
-1. **Install BepInEx and StationeersLaunchPad** if you have not already, following the
-   [StationeersLaunchPad installation guide](https://github.com/StationeersLaunchPad/StationeersLaunchPad#installation).
-   You should see the LaunchPad window at the bottom of the game's loading screen.
-2. **Download** `MagnetsRecipes-<version>.zip` from the
+First **install BepInEx and StationeersLaunchPad** if you have not already, following the
+[StationeersLaunchPad installation guide](https://github.com/StationeersLaunchPad/StationeersLaunchPad#installation).
+You should see the LaunchPad window at the bottom of the game's loading screen.
+
+### From the Steam Workshop
+
+Subscribe on the
+[Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3840065472). Steam keeps
+it up to date. Check that **Magnet's Recipes** is enabled in LaunchPad's mod list on the loading
+screen.
+
+### By hand
+
+1. **Download** `MagnetsRecipes-<version>.zip` from the
    [Releases page](https://github.com/jweisner/Stationeers-MagnetsRecipes/releases).
-3. **Extract it into your Stationeers mods folder**, so that you end up with a
+2. **Extract it into your Stationeers mods folder**, so that you end up with a
    `MagnetsRecipes` folder inside it:
 
    | Platform | Mods folder |
@@ -37,15 +47,23 @@ methane atmosphere, which is where the balance comes from.
    mods/
      MagnetsRecipes/
        About/About.xml
+       About/thumb.png
+       About/Preview.png
        GameData/advancedfurnace.xml
+       LICENSE
        MagnetsRecipes.dll
    ```
 
-4. **Start the game.** LaunchPad loads local mods automatically. To check it is enabled, click
+3. **Start the game.** LaunchPad loads local mods automatically. To check it is enabled, click
    the LaunchPad window on the loading screen and look for **Magnet's Recipes** in the mod list.
 
 To update, delete the old `MagnetsRecipes` folder and extract the new zip in its place. To
 uninstall, delete the folder.
+
+**Use one or the other, not both.** A Workshop subscription and a copy in `mods/` are the same
+mod. If both are enabled, the furnace patch runs twice and every deposit happens twice; with a
+LaunchPad mod pack active, LaunchPad does not catch the duplicate for you. Keep only one copy
+enabled.
 
 **Multiplayer**: every player and the server need the mod. For a dedicated server, see
 LaunchPad's dedicated server instructions (its `Export Mod Package` button bundles your enabled
