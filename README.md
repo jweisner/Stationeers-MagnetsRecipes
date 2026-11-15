@@ -145,6 +145,7 @@ for that version, and checks the uploaded zip actually downloads.
 | `src/Plugin.cs` | BepInEx entry point and config |
 | `deploy.sh` | Build and install into the local mods folder |
 | `release.sh` | Build the release zip, optionally publish a GitHub release |
+| `LICENSE` | Apache License 2.0 |
 | `art/make_art.py` | Generates the thumbnail and preview SVGs; its docstring has the render commands |
 
 ## AI disclosure
@@ -152,3 +153,7 @@ for that version, and checks the uploaded zip actually downloads.
 The code and artwork for Magnet's Recipes were produced with an AI coding assistant, working
 under the author's direction. The author chose the design, tests features in game before
 release, and decides what ships.
+
+## License
+
+Apache License 2.0. See [LICENSE](LICENSE).
