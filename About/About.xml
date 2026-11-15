@@ -4,6 +4,7 @@
   <ModID>net.pbmagnet.stationeers.MagnetsRecipes</ModID>
   <Author>Pb_Magnet</Author>
   <Version>0.0.1</Version>
+  <WorkshopHandle>3840065472</WorkshopHandle>
   <Description>Puts methane to work in the Advanced Furnace. Hot methane is cracked into carbon and hydrogen (CH4 -&gt; C + 2 H2), in two ways.
 
 CHARCOAL PYROLYSIS
